@@ -25,7 +25,7 @@
  *
  */
 
-#include "vice.h"
+#include "../vice/src/vice.h"
 
 #include <ctype.h>
 #include <stdarg.h>
@@ -61,14 +61,14 @@
 #endif
 
 #include "archdep.h"
-#include "findpath.h"
-#include "lib.h"
-#include "log.h"
-#include "machine.h"
+#include "../vice/src/findpath.h"
+#include "../vice/src/lib.h"
+#include "../vice/src/log.h"
+#include "../vice/src/machine.h"
 #include "ui.h"
-#include "util.h"
-#include "keyboard.h"
-#include "keymap.h"
+#include "../vice/src/util.h"
+#include "../vice/src/keyboard.h"
+#include "../vice/src/keymap.h"
 
 #include "../vice/src/arch/shared/archdep_access.c"
 #include "../vice/src/arch/shared/archdep_chdir.c"
