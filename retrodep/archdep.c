@@ -70,24 +70,24 @@
 #include "keyboard.h"
 #include "keymap.h"
 
-#include "arch/shared/archdep_access.c"
-#include "arch/shared/archdep_chdir.c"
-#include "arch/shared/archdep_close.c"
-#include "arch/shared/archdep_current_dir.c"
-#include "arch/shared/archdep_default_portable_resource_file_name.c"
-#include "arch/shared/archdep_dir.c"
-#include "arch/shared/archdep_expand_path.c"
-#include "arch/shared/archdep_extra_title_text.c"
-#include "arch/shared/archdep_file_size.c"
-#include "arch/shared/archdep_fseeko.c"
-#include "arch/shared/archdep_ftello.c"
-#include "arch/shared/archdep_getcwd.c"
-#include "arch/shared/archdep_kbd_get_host_mapping.h"
-#include "arch/shared/archdep_program_path.c"
-#include "arch/shared/archdep_quote_unzip.c"
-#include "arch/shared/archdep_remove.c"
-#include "arch/shared/archdep_set_openmp_wait_policy.c"
-#include "arch/shared/archdep_tick.c"
+#include "../vice/src/arch/shared/archdep_access.c"
+#include "../vice/src/arch/shared/archdep_chdir.c"
+#include "../vice/src/arch/shared/archdep_close.c"
+#include "../vice/src/arch/shared/archdep_current_dir.c"
+#include "../vice/src/arch/shared/archdep_default_portable_resource_file_name.c"
+#include "../vice/src/arch/shared/archdep_dir.c"
+#include "../vice/src/arch/shared/archdep_expand_path.c"
+#include "../vice/src/arch/shared/archdep_extra_title_text.c"
+#include "../vice/src/arch/shared/archdep_file_size.c"
+#include "../vice/src/arch/shared/archdep_fseeko.c"
+#include "../vice/src/arch/shared/archdep_ftello.c"
+#include "../vice/src/arch/shared/archdep_getcwd.c"
+#include "../vice/src/arch/shared/archdep_kbd_get_host_mapping.h"
+#include "../vice/src/arch/shared/archdep_program_path.c"
+#include "../vice/src/arch/shared/archdep_quote_unzip.c"
+#include "../vice/src/arch/shared/archdep_remove.c"
+#include "../vice/src/arch/shared/archdep_set_openmp_wait_policy.c"
+#include "../vice/src/arch/shared/archdep_tick.c"
 
 #include "libretro-core.h"
 extern unsigned int opt_read_vicerc;
@@ -351,14 +351,14 @@ int archdep_path_is_relative(const char *path)
 {
 #ifdef __WIN32__
     return !((isalpha(path[0]) && path[1] == ':') || path[0] == '/' || path[0] == '\\');
-#elif defined(VITA) || defined(__SWITCH__) || defined(WIIU) || defined(_3DS)
+#elif defined(VITA) || defined(__SWITCH__) || defined(GEKKO) || defined(WIIU) || defined(_3DS)
     if (path == NULL)
         return 0;
     if (*path == '/')
         return 0;
     /* Vita might also use "ux0:" or "uma0:" for absolute paths
      * Switch might also use "sdmc:" for absolute paths
-     * WIIU and 3DS might also use "sd:" for absolute paths */
+     * WII, WIIU and 3DS might also use "sd:" for absolute paths */
     for (int i = 0; i <= 4; i++)
     {
         if (path[i] == '\0')
