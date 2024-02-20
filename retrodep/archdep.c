@@ -150,6 +150,13 @@ int access(const char *fpath, int mode)
 #endif
 #endif /* __PS3__ */
 
+#ifdef GEKKO
+int access(const char *fpath, int mode)
+{
+    struct stat buffer;   
+    return libretro_stat(fpath, &buffer);
+}
+#endif /* GEKKO */
 
 #ifdef USE_LIBRETRO_VFS
 RFILE *archdep_fdopen(int fd, const char *mode)
