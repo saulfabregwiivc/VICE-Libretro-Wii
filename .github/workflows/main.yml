@@ -1,0 +1,44 @@
+on:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+
+  build-libretro:
+    strategy:
+      matrix:
+        arch: [wii]
+        core: [64]
+      fail-fast: false
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - shell: bash
+      run: |
+        git clone https://github.com/libretro/vice-libretro core
+        cd core
+
+
+        # devkitppc r29, 2018-05-22
+        docker run --rm -v "$PWD:/build" devkitpro/devkitppc:20180522 sh -c "cd /build; make -f Makefile -j`nproc` platform=wii"
+
+
+    - shell: bash
+      run: |
+        git clone https://github.com/libretro/RetroArch.git retroarch --recursive --depth 1 --branch v1.7.9
+        cd retroarch
+
+        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180522 sh -c "cd /build; make -f Makefile.wii.salamander"
+
+        mv ../core/vice_x64_libretro_wii.a libretro_wii.a
+        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180522 sh -c "cd /build; make -f Makefile.griffin platform=wii"
+
+
+    - uses: actions/upload-artifact@main
+      with:
+        name: vice_${{ matrix.core }}_${{ matrix.arch }}
+        path: ${{ github.workspace }}/retroarch/**.dol
