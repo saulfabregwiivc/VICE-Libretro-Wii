@@ -23,8 +23,8 @@ jobs:
         cd core
 
 
-        # devkitppc r29-1, 2018-06-13
-        docker run --rm -v "$PWD:/build" devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile -j`nproc` platform=wii"
+        # devkitppc r29-1, 2018-05-22 (06-13)
+        docker run --rm -v "$PWD:/build" devkitpro/devkitppc:20180522 sh -c "cd /build; make -f Makefile -j`nproc` platform=wii"
 
 
     - shell: bash
@@ -33,7 +33,7 @@ jobs:
         cd retroarch
 
         mv ../core/vice_x64_libretro_wii.a libretro_wii.a
-        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile.griffin platform=wii EXTERNAL_LIBOGC=1 HAVE_THREADS=0 GX_PTHREAD_LEGACY=0"
+        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180522 sh -c "cd /build; make -f Makefile.griffin platform=wii EXTERNAL_LIBOGC=1 HAVE_THREADS=0 GX_PTHREAD_LEGACY=0"
 
 
     - uses: actions/upload-artifact@main
