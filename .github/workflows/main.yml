@@ -32,10 +32,10 @@ jobs:
         git clone https://github.com/libretro/RetroArch.git retroarch --recursive --depth 1 --branch v1.7.9
         cd retroarch
 
-        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile.wii.salamander"
+        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile.wii.salamander EXTERNAL_LIBOGC=1"
 
         mv ../core/vice_x64_libretro_wii.a libretro_wii.a
-        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile.griffin platform=wii"
+        docker run --rm -v "$PWD:/build" --network=host devkitpro/devkitppc:20180613 sh -c "cd /build; make -f Makefile.griffin platform=wii  EXTERNAL_LIBOGC=1"
 
 
     - uses: actions/upload-artifact@main
